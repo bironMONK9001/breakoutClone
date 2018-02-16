@@ -23,8 +23,8 @@ class Brick():
 		self.POSX = 0
 		self.POSY = 10
 		
-	def draw(self):
-		pygame.draw.rect(DISPLAYSURF, RED, (self.POSX, self.POSY, self.BRICKWIDTH, self.BRICKHEIGHT))
+	def draw(self, x, y):
+		pygame.draw.rect(DISPLAYSURF, RED, (x, y, self.BRICKWIDTH, self.BRICKHEIGHT))
 
 
 class Ball():
@@ -34,7 +34,7 @@ class Ball():
 		self.BALLHEIGHT = 15
 		self.POSX = (WINWIDTH / 2) - self.BALLWIDTH
 		self.POSY = WINHEIGHT - 65 
-		self.BALLSPEED = 10
+		self.BALLSPEED = 0 
 		self.UPLEFT =  True	
 		self.UPRIGHT = False
 		self.DOWNRIGHT = False
@@ -44,8 +44,6 @@ class Ball():
 		pygame.draw.rect(DISPLAYSURF, WHITE, (self.POSX, self.POSY, self.BALLWIDTH, self.BALLHEIGHT))
 	
 	def update(self):
-		ball = Ball()	
-		ball.collide()	
 		if self.UPLEFT == True:
 			self.POSX -= self.BALLSPEED
 			self.POSY -= self.BALLSPEED
@@ -132,7 +130,18 @@ def main():
 				player.stop(event.key)
 	
 		DISPLAYSURF.fill(BGCOLOR)
-		brick.draw()	
+
+		brickX = 20 
+		brickY = 0
+		for i in range(0, 5):
+			for j in range (0, 19):
+				brick.draw(brickX, brickY)
+				brickX += 70
+			brickX = 20 
+			brickY += 50
+			
+
+
 		player.update()
 		player.draw()
 		ball.update()
