@@ -21,7 +21,7 @@ class Brick():
 		self.BRICKWIDTH = 50
 		self.BRICKHEIGHT = 25
 		self.POSX = 0
-		self.POSY = 10
+		self.POSY = 5 
 		
 	def draw(self, x, y):
 		pygame.draw.rect(DISPLAYSURF, RED, (x, y, self.BRICKWIDTH, self.BRICKHEIGHT))
@@ -31,47 +31,24 @@ class Ball():
 
 	def __init__(self):
 		self.BALLWIDTH = 15 
-		self.BALLHEIGHT = 15
+		self.BALLHEIGHT = 15 
 		self.POSX = (WINWIDTH / 2) - self.BALLWIDTH
 		self.POSY = WINHEIGHT - 65 
-		self.BALLSPEED = 0 
-		self.UPLEFT =  True	
-		self.UPRIGHT = False
-		self.DOWNRIGHT = False
-		self.DOWNLEFT = False
+		self.BALLSPEEDX = 1 
+		self.BALLSPEEDY = 1
 
 	def draw(self):
 		pygame.draw.rect(DISPLAYSURF, WHITE, (self.POSX, self.POSY, self.BALLWIDTH, self.BALLHEIGHT))
-	
-	def update(self):
-		if self.UPLEFT == True:
-			self.POSX -= self.BALLSPEED
-			self.POSY -= self.BALLSPEED
-		if self.UPRIGHT == True:
-			self.POSX += self.BALLSPEED
-			self.POSY -= self.BALLSPEED
-		if self.DOWNLEFT == True:
-			self.POSX -= self.BALLSPEED
-			self.POSY += self.BALLSPEED
-		if self.DOWNRIGHT == True:
-			self.POSX += self.BALLSPEED
-			self.POSY += self.BALLSPEED
-			
-	def collide(self):
-		if self.POSX > (WINWIDTH - self.BALLWIDTH) or self.POSX < 0:
-			if self.DOWNLEFT == True: 
-				self.DOWNLEFT = False
-				self.DOWNRIGHT = True
-			if self.UPLEFT == True:
-				self.UPLEFT = False
-				self.UPRIGHT = True
-			if self.DOWNRIGHT == True:
-				self.DOWNRIGHT = False
-				self.DOWNLEFT = True
-			if self.UPRIGHT == True:
-				self.UPRIGHT = False
-				self.UPLEFT = True
-			
+
+	def move(self):
+		self.POSX += self.BALLSPEEDX
+		self.POSY += self.BALLSPEEDY
+
+		if self.POSX > WINWIDTH - self.BALLWIDTH or self.POSX < 0:
+			self.BALLSPEEDX = self.BALLSPEEDX * -1
+		if self.POSY > WINHEIGHT - self.BALLHEIGHT or self.POSY < 0:
+			self.BALLSPEEDY = self.BALLSPEEDY * -1
+
 
 class Player():
 
@@ -144,8 +121,8 @@ def main():
 
 		player.update()
 		player.draw()
-		ball.update()
 		ball.draw()
+		ball.move()
 		pygame.display.update()
 		FPSCLOCK.tick(FPS)
 
