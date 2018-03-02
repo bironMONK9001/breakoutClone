@@ -15,9 +15,12 @@ ENEMYCOLOR = RED
 PLAYERCOLOR = WHITE
 BALLCOLOR = WHITE
 
-class Brick():
+class Brick(pygame.sprite.Sprite):
 	
 	def __init__(self):
+
+		super().__init__()
+
 		self.BRICKWIDTH = 50
 		self.BRICKHEIGHT = 25
 		self.POSX = 0
@@ -27,9 +30,12 @@ class Brick():
 		pygame.draw.rect(DISPLAYSURF, RED, (x, y, self.BRICKWIDTH, self.BRICKHEIGHT))
 
 
-class Ball():
+class Ball(pygame.sprite.Sprite):
 
 	def __init__(self):
+
+		super().__init__()
+
 		self.BALLWIDTH = 15 
 		self.BALLHEIGHT = 15 
 		self.POSX = (WINWIDTH / 2) - self.BALLWIDTH
@@ -41,8 +47,8 @@ class Ball():
 		pygame.draw.rect(DISPLAYSURF, WHITE, (self.POSX, self.POSY, self.BALLWIDTH, self.BALLHEIGHT))
 
 	def move(self):
-		self.POSX += self.BALLSPEEDX
-		self.POSY += self.BALLSPEEDY
+		self.POSX -= self.BALLSPEEDX
+		self.POSY -= self.BALLSPEEDY
 
 		if self.POSX > WINWIDTH - self.BALLWIDTH or self.POSX < 0:
 			self.BALLSPEEDX = self.BALLSPEEDX * -1
@@ -50,9 +56,12 @@ class Ball():
 			self.BALLSPEEDY = self.BALLSPEEDY * -1
 
 
-class Player():
+class Player(pygame.sprite.Sprite):
 
 	def __init__(self):
+
+		super().__init__()
+		
 		self.PLAYERWIDTH = 150
 		self.PLAYERHEIGHT = 50
 		self.POSX = (WINWIDTH - self.PLAYERWIDTH) / 2 
@@ -90,7 +99,7 @@ def main():
 	DISPLAYSURF = pygame.display.set_mode((WINWIDTH, WINHEIGHT))
 		
 	pygame.display.set_caption('Breakout Clone')
-	
+
 	brick = Brick()
 	ball = Ball()
 	player = Player()
@@ -116,8 +125,7 @@ def main():
 				brickX += 70
 			brickX = 20 
 			brickY += 50
-			
-
+		
 
 		player.update()
 		player.draw()
